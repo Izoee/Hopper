@@ -10216,7 +10216,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
             FileDelete, % ExampleImageFolder "\Images.zip"
         }
         if !FileExist(ConfigFile) {
-            UrlDownloadToFile, % "https://github.com/Izoee/Hopper/raw/main/Source/Updater.ahk", % UpdaterPath
+            UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/Source/Updater.ahk", % A_AppData "\Athenaware\Hopper\Updater.ahk"
             WriteInitConfig()
             CheckImages(0, ImagePaths)
             Config := PopulateConfig(ConfigFile)
