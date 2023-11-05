@@ -9379,7 +9379,7 @@ CoordMode, Mouse, Screen
 GetAdmin()
 SoTIsRunning()
 
-; InitGlobals
+; Init Globals
     global AWFolder = % A_AppData "\Athenaware"
     global HopperFolder = % A_AppData "\Athenaware\Hopper"
     global ImageFolder = % A_AppData "\Athenaware\Hopper\Images"
@@ -10216,7 +10216,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
             FileDelete, % ExampleImageFolder "\Images.zip"
         }
         if !FileExist(ConfigFile) {
-            UrlDownloadToFile, % "https://github.com/Izoee/Hopper/raw/main/Updater.exe", % UpdaterPath
+            UrlDownloadToFile, % "https://github.com/Izoee/Hopper/raw/main/Bin/Updater.exe", % UpdaterPath
             WriteInitConfig()
             CheckImages(0, ImagePaths)
             Config := PopulateConfig(ConfigFile)
@@ -10313,7 +10313,8 @@ CheckForUpdates(HopperFolder, Config) {
     if(VersionNo > Config.VERSION.VersionNo){
         MsgBox, 4, % "Update", % "An update is avaliable, would you like to update Hopper?"
         IfMsgBox Yes
-            Run, % UpdaterPath
+            Run, %A_AHKPath% %A_AppData%\Athenaware\Hopper\Updater.ahk
+            ExitApp
     }
     return
 }
