@@ -28,7 +28,7 @@ Update(ConfigPath, InstallPath) {
     if(ErrorLevel = 0){
         MsgBox, 0, % "Success", % "Hopper was updated successfully."
         WriteIni(ConfigPath, "VERSION", "VersionNo", NewVersionNo)
-        ; Run % InstallPath
+        Run % InstallPath
         ExitApp
     } else {
         MsgBox, 0, % "Error", % "Hopper failed to Update."
