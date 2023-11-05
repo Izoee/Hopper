@@ -9385,7 +9385,7 @@ SoTIsRunning()
     global ImageFolder = % A_AppData "\Athenaware\Hopper\Images"
     global ExampleImageFolder = % A_AppData "\Athenaware\Hopper\Images\ScreensToCapture"
     global ConfigFile = % A_AppData "\Athenaware\Hopper\Hopper.config"
-    global UpdaterPath = % A_AppData "\Athenaware\Hopper\Updater.exe"
+    global UpdaterPath = % A_AppData "\Athenaware\Hopper\Updater.ahk"
 
     global ImagePaths := []
     ImagePaths.Scan1 := ImageFolder "\StartGame.jpg"
@@ -10216,7 +10216,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
             FileDelete, % ExampleImageFolder "\Images.zip"
         }
         if !FileExist(ConfigFile) {
-            UrlDownloadToFile, % "https://github.com/Izoee/Hopper/raw/main/Bin/Updater.exe", % UpdaterPath
+            UrlDownloadToFile, % "https://github.com/Izoee/Hopper/raw/main/Source/Updater.ahk", % UpdaterPath
             WriteInitConfig()
             CheckImages(0, ImagePaths)
             Config := PopulateConfig(ConfigFile)
