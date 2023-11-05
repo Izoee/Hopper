@@ -9377,9 +9377,9 @@ CoordMode, Mouse, Screen
 }
 
 GetAdmin()
-; SoTIsRunning()
+SoTIsRunning()
 
-; InitGlobals() {
+; InitGlobals
     global AWFolder = % A_AppData "\Athenaware"
     global HopperFolder = % A_AppData "\Athenaware\Hopper"
     global ImageFolder = % A_AppData "\Athenaware\Hopper\Images"
