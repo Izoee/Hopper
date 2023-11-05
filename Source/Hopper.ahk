@@ -10229,7 +10229,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
     }
 }
 WriteInitConfig() {
-    IniWrite, % "4", %ConfigFile%, % "VERSION", % "VersionNo"
+    IniWrite, % "5", %ConfigFile%, % "VERSION", % "VersionNo"
 
     IniWrite, % A_ScriptFullPath, %ConfigFile%, % "DIRECTORIES", % "Installation"
 
@@ -11113,19 +11113,19 @@ WebHookGuiControl() {
 }
 WebHookMessage(Message){
     if(Message = "connected the WebHook."){
-        if(Config.WEBHOOK.URL = ""){
+        if(Config.WEBHOOK.URL = "" or Config.WEBHOOK.URL = 0){
             MsgBox,0, % "Error", % "Your WebHook URL is empty."
             return
         }
-        if(Config.WEBHOOK.Id = ""){
+        if(Config.WEBHOOK.Id = "" or Config.WEBHOOK.Id = 0){
             MsgBox, 0, % "Error", % "Your Discord Id is empty."
             return
         }
     } else {
-        if(Config.WEBHOOK.URL = ""){
+        if(Config.WEBHOOK.URL = "" or Config.WEBHOOK.URL = 0){
             return
         }
-        if(Config.WEBHOOK.Id = ""){
+        if(Config.WEBHOOK.Id = "" or Config.WEBHOOK.Id = 0){
             return
         }
     }
@@ -11226,6 +11226,7 @@ ClickMouse(X, Y) {
 ; Main Loop
 Main:
 {
+    SoTIsRunning()
     global IsInGame := InGameCheck()
     HoppingHandler()
     return
