@@ -10228,7 +10228,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
     }
 }
 WriteInitConfig() {
-    IniWrite, % "0", %ConfigFile%, % "VERSION", % "VersionNo"
+    IniWrite, % "2", %ConfigFile%, % "VERSION", % "VersionNo"
 
     IniWrite, % A_ScriptFullPath, %ConfigFile%, % "DIRECTORIES", % "Installation"
 
@@ -11238,6 +11238,7 @@ End::
     return
 }
 
+/*
 ^L::
 {
     LeaveGame()
@@ -11249,6 +11250,7 @@ End::
     ReHop()
     return
 }
+*/
 
 ^Q::
 {
