@@ -11112,12 +11112,14 @@ WebHookGuiControl() {
     return
 }
 WebHookMessage(Message){
-    if (Config.WEBHOOK.URL = "") {
-        MsgBox,0, % "Error", % "Your WebHook URL is empty."
-        return
-    }
-    if (Config.WEBHOOK.Id = "") {
-        MsgBox, 0, % "Error", % "Your Discord Id is empty."
+    if(Message = "connected the WebHook."){
+        if (Config.WEBHOOK.URL = "") {
+            MsgBox,0, % "Error", % "Your WebHook URL is empty."
+            return
+        }
+        if (Config.WEBHOOK.Id = "") {
+            MsgBox, 0, % "Error", % "Your Discord Id is empty."
+        }
     }
     Url := Config.WEBHOOK.URL
     DiscordId := Config.WEBHOOK.Id
