@@ -10228,7 +10228,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
     }
 }
 WriteInitConfig() {
-    IniWrite, % "2", %ConfigFile%, % "VERSION", % "VersionNo"
+    IniWrite, % "3", %ConfigFile%, % "VERSION", % "VersionNo"
 
     IniWrite, % A_ScriptFullPath, %ConfigFile%, % "DIRECTORIES", % "Installation"
 
@@ -11113,12 +11113,20 @@ WebHookGuiControl() {
 }
 WebHookMessage(Message){
     if(Message = "connected the WebHook."){
-        if (Config.WEBHOOK.URL = "") {
+        if(Config.WEBHOOK.URL = ""){
             MsgBox,0, % "Error", % "Your WebHook URL is empty."
             return
         }
-        if (Config.WEBHOOK.Id = "") {
+        if(Config.WEBHOOK.Id = ""){
             MsgBox, 0, % "Error", % "Your Discord Id is empty."
+            return
+        }
+    } else {
+        if(Config.WEBHOOK.URL = ""){
+            return
+        }
+        if(Config.WEBHOOK.Id = ""){
+            return
         }
     }
     Url := Config.WEBHOOK.URL
