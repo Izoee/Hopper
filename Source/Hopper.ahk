@@ -10217,6 +10217,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
         }
         if !FileExist(ConfigFile) {
             UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/Source/Updater.ahk", % A_AppData "\Athenaware\Hopper\Updater.ahk"
+            UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/EventHopper.lua", % A_AppData "\Athenaware\Scripts\Hopper=EventDisplay.lua"
             WriteInitConfig()
             CheckImages(0, ImagePaths)
             Config := PopulateConfig(ConfigFile)
@@ -10228,7 +10229,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
     }
 }
 WriteInitConfig() {
-    IniWrite, % "3", %ConfigFile%, % "VERSION", % "VersionNo"
+    IniWrite, % "0", %ConfigFile%, % "VERSION", % "VersionNo"
 
     IniWrite, % A_ScriptFullPath, %ConfigFile%, % "DIRECTORIES", % "Installation"
 
