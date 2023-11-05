@@ -10563,7 +10563,7 @@ HopperGui() {
     Gui, Hopper: Add, Text, %Column2X% y7 w200 Center, % "Player Hop"
     Gui, Hopper: Font, s11 NORMAL
     Gui, Hopper: Add, Checkbox, %Column2X% y27 gStreamerToggle vStreamerToggle, % "Streamers"
-    Gui, Hopper: Add, Checkbox, %Column2X% y47 gBlacklistToggle vBlacklistToggle, % "Salty / Toxic"
+    Gui, Hopper: Add, Checkbox, %Column2X% y47 gBlacklistToggle vBlacklistToggle, % "Blacklist"
     Gui, Hopper: Add, Checkbox, %Column2X% y67 gCheaterToggle vCheaterToggle, % "Cheaters"
     Gui, Hopper: Add, Checkbox, %Column2X% y87 gFemoidToggle vFemoidToggle, % "Females"
 
