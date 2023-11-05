@@ -11,11 +11,11 @@ return
 
 Update(ConfigPath, InstallPath) {
     local
-    if(InStr(InstallPath, ".ahk") ~= 0){
+    ; if(InStr(InstallPath, ".ahk") ~= 0){
         UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/Source/Hopper.ahk", % InstallPath
-    } else {
-        UrlDownloadToFile, $ "https://raw.githubusercontent.com/Izoee/Hopper/main/Bin/Hopper.exe", % InstallPath
-    }
+    ; } else {
+        ; UrlDownloadToFile, $ "https://raw.githubusercontent.com/Izoee/Hopper/main/Bin/Hopper.exe", % InstallPath
+    ; }
     if(ErrorLevel = 0){
         MsgBox, 0, % "Success", % "Hopper was updated successfully."
         Run % InstallPath
