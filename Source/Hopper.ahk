@@ -9521,19 +9521,19 @@ HopPhase1(ReHop) {
     }
     if(Scan1 = 1){
         ClickMouse(ClickCoords.StartGame.X, ClickCoords.StartGame.Y)
-        Sleep, 100
+        Sleep, 75
         HopperObj.Phase := 2
         return
     }
     if(Scan1 = 2){
         ClickMouse(ClickCoords.StartGame.X, ClickCoords.StartGame.Y)
-        Sleep, 100
+        Sleep, 75
         HopperObj.Phase := 2
         return
     }
     if(Scan1 = 3){
         ClickMouse(ClickCoords.Play.X, ClickCoords.Play.Y)
-        Sleep, 100
+        Sleep, 75
         HopperObj.Phase := 3
         return
     }
@@ -9551,7 +9551,7 @@ HopPhase2(ScanEnum) {
         Scan2 := ScanScreenForMatch(2, 1000)
         if(Scan2 = 1){
             ClickMouse(ClickCoords.Play.X, ClickCoords.Play.Y)
-            Sleep, 100
+            Sleep, 75
             HopperObj.Phase := 3
             return
         } else {
@@ -9566,7 +9566,7 @@ HopPhase2(ScanEnum) {
         Scan2 := ScanScreenForMatch(2, 500)
         if(Scan2 = 1){
             ClickMouse(ClickCoords.Play.X, ClickCoords.Play.Y)
-            Sleep, 100
+            Sleep, 75
             HopperObj.Phase := 3
             return
         } else {
@@ -9583,29 +9583,29 @@ HopPhase3() {
     global
     Phase3Timing := Config.TIMING.Captaincy
     ClickMouse(ClickCoords.LoMI.X, ClickCoords.LoMI.Y)
-    Sleep, 100
+    Sleep, 75
     if(Config.SHIPTYPE.Gally = 1 or Config.SHIPTYPE.Brig = 1 or Config.SHIPTYPE.Sloop = 1){
         ClickMouse(ClickCoords.Charter.X, ClickCoords.Charter.Y)
-        Sleep, 100
+        Sleep, 75
         if(Config.SHIPTYPE.Gally = 1){
             ClickMouse(ClickCoords.Gally.X, ClickCoords.Gally.Y)
-            Sleep, 100
+            Sleep, 75
         } else if(Config.SHIPTYPE.Brig = 1){
             ClickMouse(ClickCoords.Brig.X, ClickCoords.Brig.Y)
-            Sleep, 100
+            Sleep, 75
         } else if(Config.SHIPTYPE.Sloop = 1){
             ClickMouse(ClickCoords.Sloop.X, ClickCoords.Sloop.Y)
-            Sleep, 100
+            Sleep, 75
         }
     } else if(Config.SHIPTYPE.Captain = 1){
         Sleep, %Phase3Timing%
         ClickMouse(ClickCoords.MyShips.X, ClickCoords.MyShips.Y)
-        Sleep, 100
+        Sleep, 75
         ClickMouse(ClickCoords.SailCaptainsShip.X, ClickCoords.SailCaptainsShip.Y)
-        Sleep, 100
+        Sleep, 75
     }
     ClickMouse(ClickCoords.AssembleCrew.X, ClickCoords.AssembleCrew.Y)
-    Sleep, 100
+    Sleep, 75
     Scan3 := ScanScreenForMatch(3)
     if(Scan3 = 1){
         ClickMouse(ClickCoords.SetSail.X, ClickCoords.SetSail.Y)
@@ -9622,26 +9622,42 @@ HopPhase3() {
 }
 HopPhase4() {
     global
+    IsPlayerHopping := IsPlayerHopping()
+    ListX := Config.SETUP.ListX
+    ListY := Config.SETUP.ListY
+    ListW := Config.SETUP.ListW
+    ListH := Config.SETUP.ListH
     if(IsInGame = 1){
-        If(HopperObj.FirstHop = 1){
-            Loop, 5
-            {
-                PixelSearch,,, Config.SETUP.ListX, Config.SETUP.ListY, Config.SETUP.ListW, Config.SETUP.ListH, 0x00ff91,, Fast RGB
-                if(ErrorLevel = 0) {
-                    Break
+        if(HopperObj.AutoHopping = 1 && IsPlayerHopping = 1){
+            If(HopperObj.FirstHop = 1){
+                Loop, 10
+                {
+                    PixelSearch,,, %ListX%, %ListY%, %ListW%, %ListH%, 0x00ff91,, Fast RGB
+                    if(ErrorLevel = 0){
+                        Break
+                    }
+                    PixelSearch,,, %ListX%, %ListY%, %ListW%, %ListH%, 0xffa900,, Fast RGB
+                    if(ErrorLevel = 0){
+                        Break
+                    }
+                    PixelSearch,,, %ListX%, %ListY%, %ListW%, %ListH%, 0xff0088,, Fast RGB
+                    if(ErrorLevel = 0){
+                        Break
+                    }
                 }
+                If(ErrorLevel = 0){
+                    Send, {Delete}
+                    Sleep, 50
+                }
+                HopperObj.FirstHop := 0
             }
-            If(ErrorLevel = 0){
-                Send, {Delete}
-                Sleep, 50
-            }
-            HopperObj.FirstHop := 0
         }
         AutoHopLogic()
     }
     return
 }
 LeaveGame(LeaveLocked := 0, ReInit := 1) {
+    IsFullScreen := IsFullScreen()
     HideMenu()
     WinActivate, Sea of Thieves
     BlockMouse()
@@ -9649,37 +9665,29 @@ LeaveGame(LeaveLocked := 0, ReInit := 1) {
     Send, {esc}
     Sleep, 50
     if(Config.SHIPTYPE.Gally = 1 or Config.SHIPTYPE.Brig = 1 or Config.SHIPTYPE.Sloop = 1){
-        Sleep, 50
-        Send, {enter}
-        Sleep, 50
-        Send, {down}
-        Sleep, 50
-        Send, {down}
-        Sleep, 50
-        Send, {enter}
-        Sleep, 50
-        Send, {down}
-        Sleep, 50
-        Send, {right}
-        Sleep, 50
+        ClickMouse(422, 232)
+        Sleep, 75
+        ClickMouse(407, 852)
+        Sleep, 75
+        if(IsFullScreen = 1){
+            ClickMouse(1673, 371)
+        } else {
+            ClickMouse(1643, 363)
+        }
+        Sleep, 75
         Send, {esc}
+        Sleep, 75
     }
-    Sleep, 50
-    Send, {down}
-    Sleep, 50
-    Send, {down}
-    Sleep, 50
-    Send, {down}
-    Sleep, 50
-    Send, {down}
-    Sleep, 50
-    Send, {down}
-    Sleep, 50
-    Send, {down}
-    Sleep, 50
-    Send, {enter}
-    Sleep, 50
-    Send, {enter}
+    ClickMouse(414, 594)
+    Sleep, 75
+    Send, {Enter}
+    Sleep, 75
+    Send, {Enter}
+    Sleep, 75
+    Send, {Enter}
+    Sleep, 75
+    Send, {Enter}
+    
     BlockInput, MouseMoveOff
     global HopperObj := InitHopperObj()
     return
@@ -10065,12 +10073,14 @@ AutoHopLogic() {
     return
 }
 IsPlayerHopping() {
+    global
     if(Config.PLAYERTYPE.Streamer = 1 or Config.PLAYERTYPE.Blacklist = 1 or Config.PLAYERTYPE.Female = 1 or Config.PLAYERTYPE.Cheater = 1){
         return 1
     } 
     return 0
 }
 IsEventHopping() {
+    global
     if(Config.EVENTTYPE.Fotd = 1 or Config.EVENTTYPE.FoF = 1 or Config.EVENTTYPE.AshenWinds = 1 or Config.EVENTTYPE.SkellyFort = 1 or Config.EVENTTYPE.SkellyFleet = 1 or Config.EVENTTYPE.GhostFleet = 1){
         return 1
     }
@@ -10229,7 +10239,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
     }
 }
 WriteInitConfig() {
-    IniWrite, % "5", %ConfigFile%, % "VERSION", % "VersionNo"
+    IniWrite, % "6", %ConfigFile%, % "VERSION", % "VersionNo"
 
     IniWrite, % A_ScriptFullPath, %ConfigFile%, % "DIRECTORIES", % "Installation"
 
@@ -10434,7 +10444,7 @@ HideMenu() {
         Gui, Main: Hide
     }
     if(ActiveMenu = 1){
-        Gui, Hopper: Hide
+        Gui, Hopper: Destroy
     }
     if(ActiveMenu = 2){
         Gui, SetupMain: Hide
@@ -10456,10 +10466,10 @@ HideMenu() {
 ShowMenu() {
     MenuToggle := 1
     if(ActiveMenu = 0){
-        Gui, Main: Hide
+        Gui, Main: Show
     }
     if(ActiveMenu = 1){
-        Gui, Hopper: Show,, % "Hopper"
+        HopperGui()
     }
     if(ActiveMenu = 2){
         Gui, SetupMain: Show,, % "Hopper Setup"
