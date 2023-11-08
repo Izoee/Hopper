@@ -9653,6 +9653,9 @@ HopPhase4() {
             }
         }
         AutoHopLogic()
+    } else {
+        Send, {Enter}
+        Sleep, 50
     }
     return
 }
