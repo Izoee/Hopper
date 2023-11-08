@@ -9661,9 +9661,9 @@ LeaveGame(LeaveLocked := 0, ReInit := 1) {
     HideMenu()
     WinActivate, Sea of Thieves
     BlockMouse()
-    Sleep 50
+    Sleep 75
     Send, {esc}
-    Sleep, 50
+    Sleep, 75
     if(Config.SHIPTYPE.Gally = 1 or Config.SHIPTYPE.Brig = 1 or Config.SHIPTYPE.Sloop = 1){
         ClickMouse(422, 232)
         Sleep, 75
@@ -9678,6 +9678,7 @@ LeaveGame(LeaveLocked := 0, ReInit := 1) {
         Send, {esc}
         Sleep, 75
     }
+    Sleep, 75
     ClickMouse(414, 594)
     Sleep, 75
     Send, {Enter}
@@ -10239,7 +10240,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
     }
 }
 WriteInitConfig() {
-    IniWrite, % "6", %ConfigFile%, % "VERSION", % "VersionNo"
+    IniWrite, % "7", %ConfigFile%, % "VERSION", % "VersionNo"
 
     IniWrite, % A_ScriptFullPath, %ConfigFile%, % "DIRECTORIES", % "Installation"
 
@@ -11228,7 +11229,7 @@ BlockMouse() {
 }
 ClickMouse(X, Y) {
     MouseMove, %X%, %Y%, 0
-    Sleep, 10
+    Sleep, 25
     Send, {LButton}
     return
 }
