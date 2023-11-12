@@ -10333,15 +10333,17 @@ CheckForUpdates(HopperFolder, Config) {
     FileDelete, % VersionInfoPath
     if(UpdaterVer > Config.VERSION.UpdaterVer){
         UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/Source/Updater.ahk", % HopperFolder ; REPLACE WITH EXE
+        WriteIni(ConfigFile, "VERSION", "UpdaterVer", UpdaterVer)
     }
     if(VersionNo > Config.VERSION.VersionNo){
         MsgBox, 4, % "Update", % "An update is avaliable, would you like to update Hopper?"
         IfMsgBox Yes
-            Run, %A_AHKPath% %A_AppData%\Athenaware\Hopper\Updater.ahk
+            Run, %A_AHKPath% %A_AppData%\Athenaware\Hopper\Updater.ahk ; REPLACE WITH EXE
             ExitApp
     }
     if(LuaVer > Config.VERSION.LuaVer){
         UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/EventHopper.lua", % AWFolder "\Scripts\Hopper-EventDisplay.lua"
+        WriteIni(ConfigFile, "VERSION", "LuaVer", LuaVer)
     }
     return
 }
