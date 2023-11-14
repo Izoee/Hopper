@@ -9681,7 +9681,7 @@ LeaveGame(LeaveLocked := 0, ReInit := 1) {
         Send, {esc}
         Sleep, 75
     }
-    Sleep, 150
+    Sleep, 75
     ClickMouse(414, 594)
     Sleep, 75
     Send, {Enter}
@@ -10243,9 +10243,7 @@ CheckConfig(AWFolder, ConfigFile, ImageFolder, ExampleImageFolder, ImagePaths) {
     }
 }
 WriteInitConfig() {
-    IniWrite, % "9", %ConfigFile%, % "VERSION", % "VersionNo"
-    IniWrite, % "1", %ConfigFile%, % "VERSION", % "LuaVer"
-    IniWrite, % "1", %ConfigFile%, % "VERSION", % "UpdaterVer"
+    IniWrite, % "11", %ConfigFile%, % "VERSION", % "VersionNo"
 
     IniWrite, % A_ScriptFullPath, %ConfigFile%, % "DIRECTORIES", % "Installation"
 
@@ -10293,8 +10291,6 @@ PopulateConfig(ConfigFile) {
     Config.WEBHOOK := []
 
     Config.VERSION.VersionNo := ReadIni(ConfigFile, "VERSION", "VersionNo")
-    Config.VERSION.LuaVer := ReadIni(ConfigFile, "VERSION", "LuaVer")
-    Config.VERSION.UpdaterVer := ReadIni(ConfigFile, "VERSION", "UpdaterVer")
     Config.DIRECTORIES.Installation := WriteIni(ConfigFile, "DIRECTORIES", "Installation", A_ScriptFullPath)
 
     Config.SETUP.ListX := ReadIni(ConfigFile, "SETUP", "ListX")
@@ -10328,22 +10324,12 @@ CheckForUpdates(HopperFolder, Config) {
     UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/ver", % HopperFolder "\VersionCheck"
     VersionInfoPath := HopperFolder "\VersionCheck"
     VersionNo := ReadIni(VersionInfoPath, "VERSION", "VersionNo")
-    LuaVer := ReadIni(VersionInfoPath, "VERSION", "LuaVer")
-    UpdaterVer := ReadIni(VersionInfoPath, "VERSION", "UpdaterVer")
     FileDelete, % VersionInfoPath
-    if(UpdaterVer > Config.VERSION.UpdaterVer){
-        UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/Source/Updater.ahk", % HopperFolder ; REPLACE WITH EXE
-        WriteIni(ConfigFile, "VERSION", "UpdaterVer", UpdaterVer)
-    }
     if(VersionNo > Config.VERSION.VersionNo){
         MsgBox, 4, % "Update", % "An update is avaliable, would you like to update Hopper?"
         IfMsgBox Yes
-            Run, %A_AHKPath% %A_AppData%\Athenaware\Hopper\Updater.ahk ; REPLACE WITH EXE
+            Run, %A_AHKPath% %A_AppData%\Athenaware\Hopper\Updater.ahk
             ExitApp
-    }
-    if(LuaVer > Config.VERSION.LuaVer){
-        UrlDownloadToFile, % "https://raw.githubusercontent.com/Izoee/Hopper/main/EventHopper.lua", % AWFolder "\Scripts\Hopper-EventDisplay.lua"
-        WriteIni(ConfigFile, "VERSION", "LuaVer", LuaVer)
     }
     return
 }
@@ -11220,50 +11206,6 @@ ExitWebhookGui:
     return
 }
 
-; Status Display
-StatusDisplay() {
-    global
-    local XPos := A_ScreenWidth - 525
-    local ScreenPos := % "x" XPos " y" 20
-    Gui, Status: +HwndStatusWindowId
-    Gui, Status: Color, EEAA99
-    Gui, Status: Font, s12 cFFFFFF, Tahoma
-    Gui, Status: Add, Text, w500 RIGHT BackgroundTrans vStatusReadout, % ""
-    Gui, Status: +LastFound +AlwaysOnTop +ToolWindow
-    WinSet, TransColor, EEAA99
-    Gui, Status: -Caption
-    Gui, Status: Show, %ScreenPos%
-    return
-}
-UpdateStatus() {
-    global
-    if(HopperObj.Phase = 1){
-        GuiControl, Status:, StatusReadout, % "Finding a starting point..."
-        return
-    }
-    else if(HopperObj.Phase = 2){
-        GuiControl, Status:, StatusReadout, % "Finding the Play screen..."
-        return
-    }
-    else if(HopperObj.Phase = 3){
-        GuiControl, Status:, StatusReadout, % "Finding the Set Sail screen..."
-        return
-    }
-    else if(HopperObj.Phase = 4){
-        if(IsInGame = 1){
-            GuiControl, Status:, StatusReadout, % "Scanning the server..."
-        } else {
-            GuiControl, Status:, StatusReadout, % "Waiting for the server..."
-        }
-        return
-    }
-    else if(HopperObj.Phase = 5){
-        GuiControl, Status:, StatusReadout, % "Re-hopping..."
-        return
-    }
-    return
-}
-
 ; Utility Functions
 ReadIni(Path, Section, Key) {
     local
@@ -11300,14 +11242,6 @@ Main:
 {
     SoTIsRunning()
     global IsInGame := InGameCheck()
-    if(HopperObj.AutoHopping = 1){
-        if(not WinExist("ahk_id " StatusWindowId)){
-            StatusDisplay()
-        }
-        UpdateStatus()
-    } else {
-        Gui, Status: Destroy
-    }
     HoppingHandler()
     return
 }
