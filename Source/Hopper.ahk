@@ -9583,6 +9583,8 @@ HopPhase3() {
     global
     Phase3Timing := Config.TIMING.Captaincy
     ClickMouse(ClickCoords.LoMI.X, ClickCoords.LoMI.Y)
+    Sleep, 750
+    ClickMouse(ClickCoords.HighSeas.X, ClickCoords.HighSeas.Y)
     Sleep, 75
     if(Config.SHIPTYPE.Gally = 1 or Config.SHIPTYPE.Brig = 1 or Config.SHIPTYPE.Sloop = 1){
         ClickMouse(ClickCoords.Charter.X, ClickCoords.Charter.Y)
@@ -9711,6 +9713,7 @@ ReHop() {
     return
 }
 ScanScreenForMatch(ScanEnum, LoopCount := 5) {
+    Sleep, 500
     if(ScanEnum = 1){
         Loop %LoopCount% {
             ImageSearch,,, 0, 0, A_ScreenWidth, A_ScreenHeight, *100 %ImageFolder%\StartGame.jpg
@@ -9730,6 +9733,9 @@ ScanScreenForMatch(ScanEnum, LoopCount := 5) {
             ImageSearch,,, 0, 0, A_ScreenWidth, A_ScreenHeight, *100 %ImageFolder%\SetSail.jpg
             If(ErrorLevel = 0){
                 return 1
+            } Else {
+                Send, {Enter}
+                Continue
             }
         }
     } else if(ScanEnum = 4){
@@ -10180,6 +10186,10 @@ PopulateClickCoords() {
     ClickCoords.LoMI := []
     ClickCoords.LoMI.X := 945
     ClickCoords.LoMI.Y := 750
+
+    ClickCoords.HighSeas := []
+    ClickCoords.HighSeas.X := 440
+    ClickCoords.HighSeas.Y := 457
 
     ClickCoords.Charter := []
     ClickCoords.Charter.X := 507
